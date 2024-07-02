@@ -5,7 +5,7 @@ export const App = () => {
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
-		fetch('https://jsonplaceholder.typicode.com/todos')
+		fetch('http://localhost:3005/todos')
 			.then((response) => response.json())
 			.then((json) => setTodos(json))
 			.finally(() => setIsLoading(false));
@@ -13,6 +13,13 @@ export const App = () => {
 
 	return (
 		<div className={styles.todosContainer}>
+			<div>
+				<form>
+					<input placeholder="Введите задачу"></input>
+					<button>Добавить задачу</button>
+				</form>
+			</div>
+
 			<h3>Список дел</h3>
 			<ol className={styles.rounded}>
 				{isLoading ? (
