@@ -1,0 +1,89 @@
+.todosContainer{
+	margin: 0 auto;
+	width: 30%;
+	background-color: #90ca9f;
+	padding: 1px 10px 5px 25px;
+	border-radius: 15px;
+}
+
+h3{
+	font-family: "Trebuchet MS", "Lucida Sans";
+}
+
+.rounded {
+	counter-reset: li;
+	list-style: none;
+	font: 14px "Trebuchet MS", "Lucida Sans";
+	padding: 0;
+	text-shadow: 0 1px 0 rgba(255,255,255,.5);
+	}
+
+.todo{
+	position: relative;
+	display: block;
+	padding: .7em .7em .7em 3em;
+	margin: .5em 0;
+	background: #e6f0ba;
+	color: #444;
+	text-decoration: none;
+	border-radius: 1em;
+	transition: .3s ease-out;
+	}
+	.todo:hover {background: #E9E4E0;}
+	.todo:hover:before {transform: rotate(360deg);}
+	.todo:before {
+	content: counter(li);
+	counter-increment: li;
+	position: absolute;
+	left: -1.3em;
+	top: 50%;
+	margin-top: -1.7em;
+	background: #e68467;
+	height: 3em;
+	width: 3em;
+	line-height: 3em;
+	border: .3em solid white;
+	text-align: center;
+	font-weight: bold;
+	border-radius: 2em;
+	transition: all .3s ease-out;
+	}
+
+
+.loader {
+
+	width: 90px;
+	height: 90px;
+	border-radius: 50%;
+	top: 50%;
+	left: 50%;
+	position: absolute;
+	animation: rotate 1s linear infinite
+  }
+  .loader::before , .loader::after {
+	content: "";
+	box-sizing: border-box;
+	position: absolute;
+	inset: 0px;
+	border-radius: 50%;
+	border: 8px solid #d2ff0a;
+	animation: prixClipFix 2s linear infinite ;
+  }
+  .loader::after{
+	border-color: #FF3D00;
+	animation: prixClipFix 2s linear infinite , rotate 0.5s linear infinite reverse;
+	inset: 4px;
+  }
+
+  @keyframes rotate {
+	0%   {transform: rotate(0deg)}
+	100%   {transform: rotate(360deg)}
+  }
+
+  @keyframes prixClipFix {
+	  0%   {clip-path:polygon(50% 50%,0 0,0 0,0 0,0 0,0 0)}
+	  25%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 0,100% 0,100% 0)}
+	  50%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)}
+	  75%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 100%)}
+	  100% {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 0)}
+  }
