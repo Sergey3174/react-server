@@ -2,8 +2,9 @@
 	margin: 0 auto;
 	width: 30%;
 	background-color: #90ca9f;
-	padding: 1px 10px 5px 25px;
+	padding: 5px 10px 5px 25px;
 	border-radius: 15px;
+	position: relative;
 }
 
 h3{
@@ -20,7 +21,7 @@ h3{
 
 .todo{
 	position: relative;
-	display: block;
+	display: flex;
 	padding: .7em .7em .7em 3em;
 	margin: .5em 0;
 	background: #e6f0ba;
@@ -28,6 +29,7 @@ h3{
 	text-decoration: none;
 	border-radius: 1em;
 	transition: .3s ease-out;
+	justify-content: space-between;
 	}
 	.todo:hover {background: #E9E4E0;}
 	.todo:hover:before {transform: rotate(360deg);}
@@ -57,7 +59,7 @@ h3{
 	border-radius: 50%;
 	top: 50%;
 	left: 50%;
-	position: absolute;
+	position: sticky;
 	animation: rotate 1s linear infinite
   }
   .loader::before , .loader::after {
@@ -75,6 +77,17 @@ h3{
 	inset: 4px;
   }
 
+
+  .modal {
+	padding: 10px 50px;
+	background-color: #e6f0ba;
+	border-radius: 10px;
+	position: absolute;
+	top: 50%;
+	z-index: 1;
+	border: 2px solid green;
+  }
+
   @keyframes rotate {
 	0%   {transform: rotate(0deg)}
 	100%   {transform: rotate(360deg)}
@@ -87,3 +100,7 @@ h3{
 	  75%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 100%)}
 	  100% {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 0)}
   }
+.sorted{
+	background-color: green;
+	color: white;
+}
