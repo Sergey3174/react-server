@@ -9,10 +9,11 @@ export const TodoItem = ({
 	setUpdateTodoTitle,
 	setUpdateId,
 	deleteTodo,
+	id,
 }) => {
 	return (
 		<li className={styles.todo}>
-			{updateId === todo.id ? (
+			{updateId === id ? (
 				<TodoForm
 					onSubmit={updateTodo}
 					todoValue={updateTodoTitle}
@@ -24,13 +25,14 @@ export const TodoItem = ({
 			<div>
 				<button
 					onClick={() => {
-						setUpdateId(todo.id);
+						setUpdateId(id);
 						setUpdateTodoTitle(todo.title);
+						console.log(id);
 					}}
 				>
 					Изменить
 				</button>
-				<button onClick={() => deleteTodo(todo.id)}>Удалить</button>
+				<button onClick={() => deleteTodo(id)}>Удалить</button>
 			</div>
 		</li>
 	);

@@ -1,23 +1,24 @@
 import { useState } from 'react';
+import { ref, push } from 'firebase/database';
+import { db } from '../../firebase';
 
-export const useOnSubmitTodo = (todos, refreshTodoList) => {
+export const useOnSubmitTodo = (todos) => {
 	const [error, setError] = useState(null);
 	const [newTodo, setNewTodo] = useState('');
 
 	const onSubmitTodo = (event) => {
 		event.preventDefault();
-		if (todos.some(({ title }) => title === newTodo)) {
+		if (Object.values(todos).some(({ title }) => title === newTodo)) {
 			setError('Такая задача существует');
 		} else {
-			fetch('http://localhost:3005/todos', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json;charset=utf-8' },
-				body: JSON.stringify({
-					userId: 1,
-					title: newTodo,
-					completed: false,
-				}),
-			}).then(refreshTodoList);
+			const todosDbRef = ref(db, 'todos');
+
+			push(todosDbRef, {
+				userId: 1,
+				title: newTodo,
+				completed: false,
+			});
+
 			setNewTodo('');
 			setError(null);
 		}

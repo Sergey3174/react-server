@@ -18,10 +18,10 @@ export const TodoList = ({
 			<ol className={styles.rounded}>
 				{isLoading ? (
 					<div className={styles.loader}></div>
-				) : todos.length ? (
-					todos.map((todo) => (
+				) : Object.keys(todos).length ? (
+					Object.entries(todos).map(([id, todo]) => (
 						<TodoItem
-							key={todo.id}
+							key={id}
 							todo={todo}
 							updateId={updateId}
 							updateTodo={updateTodo}
@@ -30,6 +30,7 @@ export const TodoList = ({
 							setUpdateId={setUpdateId}
 							deleteTodo={deleteTodo}
 							error={error}
+							id={id}
 						/>
 					))
 				) : (

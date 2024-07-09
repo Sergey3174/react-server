@@ -1,20 +1,42 @@
 import { useState, useEffect } from 'react';
-import { linkQuery } from '../utils';
+import { ref, onValue } from 'firebase/database';
+import { db } from '../../firebase';
+import { searchTodoQuery } from '../utils/search';
+import { sortedTodoQuery } from '../utils/sorted';
 
-const LINK = 'http://localhost:3005/todos';
-
-export const useQueryTodos = (refreshTodosFlag, setTodos) => {
-	const [isLoading, setIsLoading] = useState(false);
+export const useQueryTodos = (setTodos) => {
+	const [isLoading, setIsLoading] = useState(true);
 	const [searchTodo, setSeachTodo] = useState(null);
 	const [sorted, setSorted] = useState(false);
 
 	useEffect(() => {
-		setIsLoading(true);
-		fetch(`${linkQuery(sorted, searchTodo, LINK)}`)
-			.then((response) => response.json())
-			.then((json) => setTodos(json))
-			.finally(() => setIsLoading(false));
-	}, [refreshTodosFlag, sorted, searchTodo, setTodos]);
+		const todoDbRef = ref(db, 'todos');
+
+		return onValue(todoDbRef, (snapshot) => {
+			if (searchTodo) {
+				searchTodoQuery(todoDbRef, searchTodo).then((snapshot) => {
+					const loaded = snapshot.val() || {};
+					setTodos(loaded);
+				});
+			} else if (sorted) {
+				sortedTodoQuery(todoDbRef)
+					.then((snapshot) => {
+						const sortedTodo = {};
+						snapshot.forEach((el) => {
+							sortedTodo[el.key] = el.val();
+						});
+						setTodos(sortedTodo);
+					})
+					.catch((error) => {
+						console.error(error);
+					});
+			} else {
+				const loadedTodos = snapshot.val() || {};
+				setTodos(loadedTodos);
+			}
+			setIsLoading(false);
+		});
+	}, [sorted, searchTodo, setTodos]);
 
 	return { isLoading, setSeachTodo, setSorted, sorted };
 };

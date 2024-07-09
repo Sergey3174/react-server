@@ -11,27 +11,18 @@ import { TodoForm } from './Components/TodoForm';
 import { debounce } from './Components/utils';
 
 export const App = () => {
-	const [todos, setTodos] = useState([]);
-	const [refreshTodosFlag, setRefreshTodosFlag] = useState(false);
+	const [todos, setTodos] = useState({});
 
-	const refreshTodoList = () => setRefreshTodosFlag(!refreshTodosFlag);
+	const { isLoading, setSeachTodo, setSorted, sorted } = useQueryTodos(setTodos, todos);
 
-	const { isLoading, setSeachTodo, setSorted, sorted } = useQueryTodos(
-		refreshTodosFlag,
-		setTodos,
-	);
-
-	const { error, setNewTodo, newTodo, onSubmitTodo } = useOnSubmitTodo(
-		todos,
-		refreshTodoList,
-	);
+	const { error, setNewTodo, newTodo, onSubmitTodo } = useOnSubmitTodo(todos);
 
 	const { updateId, setUpdateId, updateTodoTitle, setUpdateTodoTitle, updateTodo } =
-		useUpdateTodo(refreshTodoList);
+		useUpdateTodo();
 
-	const { deleteTodo } = useDeleteTodo(refreshTodoList);
+	const { deleteTodo } = useDeleteTodo();
 
-	const searchTodoQuery = useMemo(
+	const searchTodoTimeout = useMemo(
 		() =>
 			debounce((event) => {
 				setSeachTodo(event.target.value);
@@ -41,25 +32,40 @@ export const App = () => {
 
 	return (
 		<div className={styles.todosContainer}>
-			<TodoForm
-				error={error}
-				onSubmit={onSubmitTodo}
-				todoValue={newTodo}
-				changeTodo={setNewTodo}
-			/>
+			<header>
+				<TodoForm
+					error={error}
+					onSubmit={onSubmitTodo}
+					todoValue={newTodo}
+					changeTodo={setNewTodo}
+				/>
 
-			<div>
-				<input placeholder="search" onChange={(e) => searchTodoQuery(e)}></input>
-			</div>
+				{/* <div>
+				<input
+					placeholder="search"
+					onChange={(e) => searchTodoTimeout(e)}
+				></input>
+			</div> */}
+				<div className={styles.func}>
+					<form className={styles.formSearch}>
+						<input
+							onChange={(e) => searchTodoTimeout(e)}
+							className={styles.inputSearch}
+							type="text"
+							placeholder="Поиск"
+						/>
+					</form>
 
-			<div>
-				<button
-					className={sorted ? styles.sorted : null}
-					onClick={() => setSorted(!sorted)}
-				>
-					Сортировка по алфавиту
-				</button>
-			</div>
+					<div>
+						<button
+							className={styles.btn + ' ' + (sorted ? styles.sorted : null)}
+							onClick={() => setSorted(!sorted)}
+						>
+							Сортировка по алфавиту
+						</button>
+					</div>
+				</div>
+			</header>
 
 			<TodoList
 				isLoading={isLoading}

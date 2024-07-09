@@ -1,20 +1,22 @@
 import { useState } from 'react';
+import { ref, set } from 'firebase/database';
+import { db } from '../../firebase';
 
-export const useUpdateTodo = (refreshTodoList) => {
+export const useUpdateTodo = () => {
 	const [updateId, setUpdateId] = useState(null);
 	const [updateTodoTitle, setUpdateTodoTitle] = useState(false);
 
 	const updateTodo = (event) => {
 		event.preventDefault();
-		fetch(`http://localhost:3005/todos/${updateId}`, {
-			method: 'PUT',
-			headers: { 'Content-Type': 'application/json;charset=utf-8' },
-			body: JSON.stringify({
-				userId: 1,
-				title: updateTodoTitle,
-				completed: false,
-			}),
-		}).then(refreshTodoList);
+
+		const todoDbRef = ref(db, `todos/${updateId}`);
+
+		set(todoDbRef, {
+			userId: 1,
+			title: updateTodoTitle,
+			completed: false,
+		});
+
 		setUpdateId(null);
 		setUpdateTodoTitle(null);
 	};

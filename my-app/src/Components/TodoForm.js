@@ -1,13 +1,16 @@
+import styles from '../app.module.css';
+
 export const TodoForm = ({ error, onSubmit, todoValue, changeTodo }) => {
 	return (
 		<div>
-			<form onSubmit={onSubmit}>
+			<form onSubmit={onSubmit} className={styles.formSearch}>
 				<input
+					className={styles.inputSearch}
 					value={todoValue}
 					onChange={({ target }) => changeTodo(target.value)}
 					placeholder="Введите задачу"
 				></input>
-				<button type="submit" disabled={!todoValue}>
+				<button className={styles.btn} type="submit" disabled={!todoValue}>
 					Добавить задачу
 				</button>
 			</form>
