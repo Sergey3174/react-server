@@ -1,24 +1,14 @@
 import { useMemo } from 'react';
 import styles from './app.module.css';
 import { TodoList } from './Components/TodoList';
-import {
-	useOnSubmitTodo,
-	useUpdateTodo,
-	useDeleteTodo,
-	useQueryTodos,
-} from './Components/hooks/';
+import { useOnSubmitTodo, useQueryTodos } from './Components/hooks/';
 import { TodoForm } from './Components/TodoForm';
 import { debounce } from './Components/utils';
 
 export const App = () => {
 	const { isLoading, setSeachTodo, setSorted, sorted, todos } = useQueryTodos();
 
-	const { error, setNewTodo, newTodo, onSubmitTodo } = useOnSubmitTodo(todos);
-
-	const { updateId, setUpdateId, updateTodoTitle, setUpdateTodoTitle, updateTodo } =
-		useUpdateTodo();
-
-	const { deleteTodo } = useDeleteTodo();
+	const { setNewTodo, newTodo, onSubmitTodo } = useOnSubmitTodo(todos);
 
 	const searchTodoTimeout = useMemo(
 		() =>
@@ -32,7 +22,6 @@ export const App = () => {
 		<div className={styles.todosContainer}>
 			<header>
 				<TodoForm
-					error={error}
 					onSubmit={onSubmitTodo}
 					todoValue={newTodo}
 					changeTodo={setNewTodo}
@@ -40,12 +29,6 @@ export const App = () => {
 					{'Добавить задачу'}
 				</TodoForm>
 
-				{/* <div>
-				<input
-					placeholder="search"
-					onChange={(e) => searchTodoTimeout(e)}
-				></input>
-			</div> */}
 				<div className={styles.func}>
 					<form className={styles.formSearch}>
 						<input
@@ -67,17 +50,7 @@ export const App = () => {
 				</div>
 			</header>
 
-			<TodoList
-				isLoading={isLoading}
-				todos={todos}
-				updateId={updateId}
-				updateTodo={updateTodo}
-				updateTodoTitle={updateTodoTitle}
-				setUpdateTodoTitle={setUpdateTodoTitle}
-				setUpdateId={setUpdateId}
-				deleteTodo={deleteTodo}
-				error={error}
-			/>
+			<TodoList isLoading={isLoading} todos={todos} />
 		</div>
 	);
 };

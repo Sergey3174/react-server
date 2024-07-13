@@ -1,6 +1,6 @@
 import styles from '../app.module.css';
 
-export const TodoForm = ({ error, onSubmit, todoValue, changeTodo, children }) => {
+export const TodoForm = ({ onSubmit, todoValue, changeTodo, children }) => {
 	return (
 		<div>
 			<form onSubmit={onSubmit} className={styles.formSearch}>
@@ -14,7 +14,7 @@ export const TodoForm = ({ error, onSubmit, todoValue, changeTodo, children }) =
 					{children}
 				</button>
 			</form>
-			{error && <span style={{ color: 'red' }}>Такая задача существует</span>}
+			{/* {error && <span style={{ color: 'red' }}>Такая задача существует</span>} */}
 		</div>
 	);
 };

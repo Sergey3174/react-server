@@ -1,16 +1,12 @@
 import styles from '../app.module.css';
 import { TodoForm } from './TodoForm';
+import { useUpdateTodo, useDeleteTodo } from './hooks/';
 
-export const TodoItem = ({
-	todo,
-	updateId,
-	updateTodo,
-	updateTodoTitle,
-	setUpdateTodoTitle,
-	setUpdateId,
-	deleteTodo,
-	id,
-}) => {
+export const TodoItem = ({ todo, id }) => {
+	const { updateId, setUpdateId, updateTodoTitle, setUpdateTodoTitle, updateTodo } =
+		useUpdateTodo();
+	const { deleteTodo } = useDeleteTodo();
+
 	return (
 		<li className={styles.todo}>
 			{updateId === id ? (
@@ -29,7 +25,6 @@ export const TodoItem = ({
 					onClick={() => {
 						setUpdateId(id);
 						setUpdateTodoTitle(todo.title);
-						console.log(id);
 					}}
 				>
 					Изменить
