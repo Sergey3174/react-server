@@ -1,6 +1,6 @@
 import styles from '../app.module.css';
 
-export const TodoForm = ({ error, onSubmit, todoValue, changeTodo }) => {
+export const TodoForm = ({ error, onSubmit, todoValue, changeTodo, children }) => {
 	return (
 		<div>
 			<form onSubmit={onSubmit} className={styles.formSearch}>
@@ -11,7 +11,7 @@ export const TodoForm = ({ error, onSubmit, todoValue, changeTodo }) => {
 					placeholder="Введите задачу"
 				></input>
 				<button className={styles.btn} type="submit" disabled={!todoValue}>
-					Добавить задачу
+					{children}
 				</button>
 			</form>
 			{error && <span style={{ color: 'red' }}>Такая задача существует</span>}

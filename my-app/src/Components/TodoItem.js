@@ -18,7 +18,9 @@ export const TodoItem = ({
 					onSubmit={updateTodo}
 					todoValue={updateTodoTitle}
 					changeTodo={setUpdateTodoTitle}
-				/>
+				>
+					{'Сохранить'}
+				</TodoForm>
 			) : (
 				<span>{todo.title}</span>
 			)}

@@ -4,7 +4,8 @@ import { db } from '../../firebase';
 import { searchTodoQuery } from '../utils/search';
 import { sortedTodoQuery } from '../utils/sorted';
 
-export const useQueryTodos = (setTodos) => {
+export const useQueryTodos = () => {
+	const [todos, setTodos] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [searchTodo, setSeachTodo] = useState(null);
 	const [sorted, setSorted] = useState(false);
@@ -33,10 +34,11 @@ export const useQueryTodos = (setTodos) => {
 			} else {
 				const loadedTodos = snapshot.val() || {};
 				setTodos(loadedTodos);
+				console.log(loadedTodos);
 			}
 			setIsLoading(false);
 		});
 	}, [sorted, searchTodo, setTodos]);
 
-	return { isLoading, setSeachTodo, setSorted, sorted };
+	return { isLoading, setSeachTodo, setSorted, sorted, todos };
 };

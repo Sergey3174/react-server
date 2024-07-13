@@ -114,8 +114,11 @@ header{
 .formSearch {
 	position: relative;
 	width: 300px;
-
   }
+.formSearch input {
+	margin-bottom: 5px;
+}
+
 .inputSearch {
 
 	width: 300px;

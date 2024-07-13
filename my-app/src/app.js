@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useMemo } from 'react';
 import styles from './app.module.css';
 import { TodoList } from './Components/TodoList';
 import {
@@ -11,9 +11,7 @@ import { TodoForm } from './Components/TodoForm';
 import { debounce } from './Components/utils';
 
 export const App = () => {
-	const [todos, setTodos] = useState({});
-
-	const { isLoading, setSeachTodo, setSorted, sorted } = useQueryTodos(setTodos, todos);
+	const { isLoading, setSeachTodo, setSorted, sorted, todos } = useQueryTodos();
 
 	const { error, setNewTodo, newTodo, onSubmitTodo } = useOnSubmitTodo(todos);
 
@@ -38,7 +36,9 @@ export const App = () => {
 					onSubmit={onSubmitTodo}
 					todoValue={newTodo}
 					changeTodo={setNewTodo}
-				/>
+				>
+					{'Добавить задачу'}
+				</TodoForm>
 
 				{/* <div>
 				<input
