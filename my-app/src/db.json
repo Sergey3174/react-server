@@ -1,32 +1,9 @@
 {
-  "todos": {"02": {
-      "userId": 1,
-      "title": "февраль",
-      "completed": false
+  "todos": {"2": {
+      "title": "февраль"
     },
-    "04": {
-      "userId": 1,
-      "title": "апрель",
-      "completed": false
-    },
-    "05": {
-      "userId": 1,
-      "title": "май",
-      "completed": false
-    },
-    "06": {
-      "userId": 1,
-      "title": "июнь",
-      "completed": false
-    },
-    "07": {
-      "userId": 1,
-      "title": "июль",
-      "completed": false
-    },
-    "08": {
-      "userId": 1,
-      "title": "август",
-      "completed": false
-    }}
+    "4": {
+      "title": "апрель"
+    }
+}
 }

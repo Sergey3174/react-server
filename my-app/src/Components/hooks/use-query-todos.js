@@ -33,11 +33,12 @@ export const useQueryTodos = () => {
 					});
 			} else {
 				const loadedTodos = snapshot.val() || {};
+				console.log(loadedTodos);
 				setTodos(loadedTodos);
 			}
 			setIsLoading(false);
 		});
-	}, [sorted, searchTodo, setTodos]);
+	}, [sorted, searchTodo]);
 
 	return { isLoading, setSeachTodo, setSorted, sorted, todos };
 };
