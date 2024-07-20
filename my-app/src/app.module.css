@@ -1,6 +1,7 @@
+
 .todosContainer{
 	margin: 0 auto;
-	width: 30%;
+	width: 50%;
 	background-color: #90ca9f;
 	padding: 5px 10px 5px 25px;
 	border-radius: 15px;
@@ -51,9 +52,17 @@ h3{
 	transition: all .3s ease-out;
 	}
 
+	.todoText {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		width: 60%;
+		text-decoration: none;
+		color: #627706;
+		font-size: 1.5em;
+	}
 
 .loader {
-
 	width: 90px;
 	height: 90px;
 	border-radius: 50%;
@@ -104,3 +113,120 @@ h3{
 	background-color: green;
 	color: white;
 }
+
+.todoPage{
+	display: block;
+	background-color: #e6f0ba;
+	padding: 15px;
+	margin: 5px;
+	border-radius: 1em;
+	color: #627706;
+	font-size: 1.5em;
+	font-family: "Trebuchet MS", "Lucida Sans";
+}
+
+.arrow {
+	background: none;
+	position: relative;
+	width: 25px;
+	height: 25px;
+	border: 3px solid gray;
+	border-radius: 50%;
+	cursor: pointer;
+  }
+.arrow:after {
+	content: '';
+	display: block;
+	width: 7px;
+	height: 7px;
+	border-left: 3px solid gray;
+	border-bottom: 3px solid gray;
+	transform: rotate(45deg);
+  }
+
+
+.headerTodo{
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	justify-content: space-between;
+  }
+
+.func{
+	display: flex;
+	gap: 20px
+}
+
+.formSearch {
+
+	width: 100%;
+  }
+.formSearch input {
+	margin-bottom: 5px;
+}
+
+.inputSearch {
+	width: 90%;
+	height: 42px;
+	padding-left: 10px;
+	padding-right: 10px;
+	border: 2px solid #7BA7AB;
+	border-radius: 5px;
+	outline: none;
+	background: #F9F0DA;
+	color: #9E9C9C;
+}
+
+.btn {
+	display: inline-block;
+	box-sizing: border-box;
+	padding: 0 25px;
+	margin: 0 15px 15px 0;
+	outline: none;
+	border: 1px solid #fff;
+	border-radius: 50px;
+	height: 46px;
+	line-height: 46px;
+	font-size: 14px;
+	font-weight: 600;
+	text-decoration: none;
+	color: #444;
+	background-color: #fff;
+	box-shadow: 0 4px 6px rgb(65 132 144 / 10%), 0 1px 3px rgb(0 0 0 / 8%);
+	cursor: pointer;
+	user-select: none;
+	appearance: none;
+	touch-action: manipulation;
+	vertical-align: top;
+	transition: box-shadow 0.2s;
+}
+.btn:focus-visible {
+	border: 1px solid #4c51f9;
+	outline: none;
+}
+.btn:hover {
+	transition: all 0.2s;
+	box-shadow: 0 7px 14px rgb(65 132 144 / 10%), 0 3px 6px rgb(0 0 0 / 8%);
+}
+.btn:active {
+	background-color: #808080;
+}
+.btn:disabled {
+	background-color: #eee;
+	border-color: #eee;
+	color: #444;
+	cursor: not-allowed;
+}
+.sorted{
+	background-color: #2a5e38;
+	color: white;
+}
+h3{
+	font-family: "Trebuchet MS", "Lucida Sans";
+}
+
+header{
+	display: flex;
+	justify-content: space-between;
+}
+

@@ -1,37 +1,16 @@
 import { TodoItem } from './TodoItem';
 import styles from '../app.module.css';
+import { Loader } from './Loader';
 
-export const TodoList = ({
-	isLoading,
-	todos,
-	updateId,
-	updateTodo,
-	updateTodoTitle,
-	setUpdateTodoTitle,
-	setUpdateId,
-	deleteTodo,
-	error,
-}) => {
+export const TodoList = ({ isLoading, todos }) => {
 	return (
 		<>
 			<h3>Список дел</h3>
 			<ol className={styles.rounded}>
 				{isLoading ? (
-					<div className={styles.loader}></div>
+					<Loader />
 				) : todos.length ? (
-					todos.map((todo) => (
-						<TodoItem
-							key={todo.id}
-							todo={todo}
-							updateId={updateId}
-							updateTodo={updateTodo}
-							updateTodoTitle={updateTodoTitle}
-							setUpdateTodoTitle={setUpdateTodoTitle}
-							setUpdateId={setUpdateId}
-							deleteTodo={deleteTodo}
-							error={error}
-						/>
-					))
+					todos.map((todo) => <TodoItem key={todo.id} todo={todo} />)
 				) : (
 					<span>Список пуст</span>
 				)}
