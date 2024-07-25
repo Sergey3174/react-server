@@ -6,6 +6,7 @@
 	padding: 5px 10px 5px 25px;
 	border-radius: 15px;
 	position: relative;
+
 }
 
 h3{
@@ -158,9 +159,9 @@ h3{
 }
 
 .formSearch {
-
 	width: 100%;
   }
+
 .formSearch input {
 	margin-bottom: 5px;
 }
