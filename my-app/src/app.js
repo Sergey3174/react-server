@@ -1,76 +1,55 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import styles from './app.module.css';
 import { TodoList } from './Components/TodoList';
-import {
-	useOnSubmitTodo,
-	useUpdateTodo,
-	useDeleteTodo,
-	useQueryTodos,
-} from './Components/hooks/';
+import { useOnSubmitTodo, useQueryTodos } from './hooks';
 import { TodoForm } from './Components/TodoForm';
-import { debounce } from './Components/utils';
+import { debounce } from './utils';
 
 export const App = () => {
-	const [todos, setTodos] = useState([]);
 	const [refreshTodosFlag, setRefreshTodosFlag] = useState(false);
 
 	const refreshTodoList = () => setRefreshTodosFlag(!refreshTodosFlag);
 
-	const { isLoading, setSeachTodo, setSorted, sorted } = useQueryTodos(
-		refreshTodosFlag,
-		setTodos,
-	);
+	const { isLoadingTodo, setSeachTodo, setSorted, sorted, todos } =
+		useQueryTodos(refreshTodosFlag);
 
-	const { error, setNewTodo, newTodo, onSubmitTodo } = useOnSubmitTodo(
-		todos,
-		refreshTodoList,
-	);
+	const { onSubmitTodo } = useOnSubmitTodo(refreshTodoList);
 
-	const { updateId, setUpdateId, updateTodoTitle, setUpdateTodoTitle, updateTodo } =
-		useUpdateTodo(refreshTodoList);
-
-	const { deleteTodo } = useDeleteTodo(refreshTodoList);
-
-	const searchTodoQuery = useMemo(
-		() =>
-			debounce((event) => {
-				setSeachTodo(event.target.value);
-			}, 1000),
-		[setSeachTodo],
-	);
+	const searchTodoQuery = debounce((event) => {
+		setSeachTodo(event.target.value);
+	}, 1000);
 
 	return (
 		<div className={styles.todosContainer}>
-			<TodoForm
-				error={error}
-				onSubmit={onSubmitTodo}
-				todoValue={newTodo}
-				changeTodo={setNewTodo}
-			/>
+			<header>
+				<TodoForm onSubmitTodo={onSubmitTodo} value={''} type="submit">
+					Добавить задачу
+				</TodoForm>
 
-			<div>
-				<input placeholder="search" onChange={(e) => searchTodoQuery(e)}></input>
-			</div>
+				<div className={styles.func}>
+					<form className={styles.formSearch}>
+						<input
+							placeholder="search"
+							onChange={(e) => searchTodoQuery(e)}
+							className={styles.inputSearch}
+							type="text"
+						/>
+					</form>
 
-			<div>
-				<button
-					className={sorted ? styles.sorted : null}
-					onClick={() => setSorted(!sorted)}
-				>
-					Сортировка по алфавиту
-				</button>
-			</div>
-
+					<div>
+						<button
+							className={styles.btn + ' ' + (sorted ? styles.sorted : null)}
+							onClick={() => setSorted(!sorted)}
+						>
+							Сортировка
+						</button>
+					</div>
+				</div>
+			</header>
 			<TodoList
-				isLoading={isLoading}
+				isLoading={isLoadingTodo}
 				todos={todos}
-				updateId={updateId}
-				updateTodo={updateTodo}
-				updateTodoTitle={updateTodoTitle}
-				setUpdateTodoTitle={setUpdateTodoTitle}
-				setUpdateId={setUpdateId}
-				deleteTodo={deleteTodo}
-				error={error}
+				refreshTodoList={refreshTodoList}
 			/>
 		</div>
 	);
