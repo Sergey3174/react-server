@@ -1,11 +1,14 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import styles from '../app.module.css';
 import { TodoForm } from './TodoForm';
 import { useDeleteTodo, useUpdateTodo } from '../hooks';
+import { AppContext } from '../context';
+import { Button } from './Button';
 
-export const TodoItem = ({ todo, refreshTodoList }) => {
+export const TodoItem = ({ todo }) => {
 	const [isChangeTodo, setIsChangeTodo] = useState(false);
 
+	const { refreshTodoList } = useContext(AppContext);
 	const { updateTodo } = useUpdateTodo(refreshTodoList, setIsChangeTodo);
 	const { deleteTodo } = useDeleteTodo(refreshTodoList);
 	return (
@@ -14,7 +17,6 @@ export const TodoItem = ({ todo, refreshTodoList }) => {
 				<TodoForm
 					value={todo.title}
 					onSubmitTodo={(title) => updateTodo(todo, title)}
-					type="update"
 				>
 					Сохранить
 				</TodoForm>
@@ -22,17 +24,13 @@ export const TodoItem = ({ todo, refreshTodoList }) => {
 				<div className={styles.todoText}>{todo.title}</div>
 			)}
 			<div>
-				<button
-					className={styles.btn}
-					onClick={() => {
-						setIsChangeTodo(!isChangeTodo);
-					}}
-				>
-					Изменить
-				</button>
-				<button className={styles.btn} onClick={() => deleteTodo(todo.id)}>
-					Удалить
-				</button>
+				{!isChangeTodo && (
+					<Button onClick={() => setIsChangeTodo(!isChangeTodo)}>
+						Изменить
+					</Button>
+				)}
+
+				<Button onClick={() => deleteTodo(todo.id)}>Удалить</Button>
 			</div>
 		</li>
 	);

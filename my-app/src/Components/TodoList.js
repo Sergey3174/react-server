@@ -1,8 +1,11 @@
+import { useContext } from 'react';
 import { TodoItem } from './TodoItem';
 import styles from '../app.module.css';
 import { Loader } from './Loader';
+import { AppContext } from '../context';
 
-export const TodoList = ({ isLoading, todos, refreshTodoList }) => {
+export const TodoList = ({ isLoading }) => {
+	const { todos } = useContext(AppContext);
 	return (
 		<>
 			<h3>Список дел</h3>
@@ -10,13 +13,7 @@ export const TodoList = ({ isLoading, todos, refreshTodoList }) => {
 				{isLoading ? (
 					<Loader />
 				) : todos.length ? (
-					todos.map((todo) => (
-						<TodoItem
-							key={todo.id}
-							todo={todo}
-							refreshTodoList={refreshTodoList}
-						/>
-					))
+					todos.map((todo) => <TodoItem key={todo.id} todo={todo} />)
 				) : (
 					<span>Список пуст</span>
 				)}

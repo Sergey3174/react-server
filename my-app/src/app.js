@@ -3,7 +3,9 @@ import styles from './app.module.css';
 import { TodoList } from './Components/TodoList';
 import { useOnSubmitTodo, useQueryTodos } from './hooks';
 import { TodoForm } from './Components/TodoForm';
-import { debounce } from './utils';
+import { AppContext } from './context';
+import { SearchForm } from './Components/SearchForm';
+import { Button } from './Components/Button';
 
 export const App = () => {
 	const [refreshTodosFlag, setRefreshTodosFlag] = useState(false);
@@ -15,42 +17,24 @@ export const App = () => {
 
 	const { onSubmitTodo } = useOnSubmitTodo(refreshTodoList);
 
-	const searchTodoQuery = debounce((event) => {
-		setSeachTodo(event.target.value);
-	}, 1000);
+	const data = { refreshTodoList, todos, setSeachTodo, sorted };
 
 	return (
-		<div className={styles.todosContainer}>
-			<header>
-				<TodoForm onSubmitTodo={onSubmitTodo} value={''} type="submit">
-					Добавить задачу
-				</TodoForm>
-
-				<div className={styles.func}>
-					<form className={styles.formSearch}>
-						<input
-							placeholder="search"
-							onChange={(e) => searchTodoQuery(e)}
-							className={styles.inputSearch}
-							type="text"
-						/>
-					</form>
-
-					<div>
-						<button
-							className={styles.btn + ' ' + (sorted ? styles.sorted : null)}
-							onClick={() => setSorted(!sorted)}
-						>
-							Сортировка
-						</button>
+		<AppContext.Provider value={data}>
+			<div className={styles.todosContainer}>
+				<header>
+					<TodoForm onSubmitTodo={onSubmitTodo}>Добавить задачу</TodoForm>
+					<div className={styles.func}>
+						<SearchForm />
+						<div>
+							<Button onClick={() => setSorted(!sorted)} type="sorted">
+								Сортировка
+							</Button>
+						</div>
 					</div>
-				</div>
-			</header>
-			<TodoList
-				isLoading={isLoadingTodo}
-				todos={todos}
-				refreshTodoList={refreshTodoList}
-			/>
-		</div>
+				</header>
+				<TodoList isLoading={isLoadingTodo} />
+			</div>
+		</AppContext.Provider>
 	);
 };
