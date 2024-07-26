@@ -4,7 +4,7 @@ import { linkQuery } from '../utils';
 const LINK = 'http://localhost:3005/todos';
 
 export const useQueryTodos = (refreshTodosFlag) => {
-	const [isLoadingTodo, setIsLoading] = useState(false);
+	const [isLoadingTodos, setIsLoading] = useState(false);
 	const [searchTodo, setSeachTodo] = useState(null);
 	const [sorted, setSorted] = useState(false);
 	const [todos, setTodos] = useState([]);
@@ -17,5 +17,5 @@ export const useQueryTodos = (refreshTodosFlag) => {
 			.finally(() => setIsLoading(false));
 	}, [refreshTodosFlag, sorted, searchTodo]);
 
-	return { isLoadingTodo, setSeachTodo, setSorted, sorted, todos };
+	return { isLoadingTodos, setSeachTodo, setSorted, sorted, todos };
 };

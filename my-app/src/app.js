@@ -12,12 +12,23 @@ export const App = () => {
 
 	const refreshTodoList = () => setRefreshTodosFlag(!refreshTodosFlag);
 
-	const { isLoadingTodo, setSeachTodo, setSorted, sorted, todos } =
+	const dispatch = (action) => {
+		const { type, payload } = action;
+		switch (type) {
+			case 'SET_SEARCH_TODO': {
+				setSeachTodo(payload);
+				break;
+			}
+			default:
+		}
+	};
+
+	const { isLoadingTodos, setSeachTodo, setSorted, sorted, todos } =
 		useQueryTodos(refreshTodosFlag);
 
 	const { onSubmitTodo } = useOnSubmitTodo(refreshTodoList);
 
-	const data = { refreshTodoList, todos, setSeachTodo, sorted };
+	const data = { refreshTodoList, todos, sorted, dispatch };
 
 	return (
 		<AppContext.Provider value={data}>
@@ -33,7 +44,7 @@ export const App = () => {
 						</div>
 					</div>
 				</header>
-				<TodoList isLoading={isLoadingTodo} />
+				<TodoList isLoading={isLoadingTodos} />
 			</div>
 		</AppContext.Provider>
 	);

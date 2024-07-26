@@ -4,9 +4,9 @@ import { AppContext } from '../context';
 import { debounce } from '../utils';
 
 export const SearchForm = () => {
-	const { setSeachTodo } = useContext(AppContext);
+	const { dispatch } = useContext(AppContext);
 	const searchTodoQuery = debounce(({ target }) => {
-		setSeachTodo(target.value);
+		dispatch({ type: 'SET_SEARCH_TODO', payload: target.value });
 	}, 1000);
 	return (
 		<form className={styles.formSearch}>
