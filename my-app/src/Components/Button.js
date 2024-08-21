@@ -1,9 +1,9 @@
-import { useContext } from 'react';
 import styles from '../app.module.css';
-import { AppContext } from '../context';
+import { useSelector } from 'react-redux';
+import { selectSorted } from '../selectors';
 
 export const Button = ({ onClick, children, type = '' }) => {
-	const { sorted } = useContext(AppContext);
+	const sorted = useSelector(selectSorted);
 	return (
 		<button
 			className={

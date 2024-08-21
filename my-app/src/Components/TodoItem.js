@@ -1,16 +1,17 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import styles from '../app.module.css';
 import { TodoForm } from './TodoForm';
 import { useDeleteTodo, useUpdateTodo } from '../hooks';
-import { AppContext } from '../context';
 import { Button } from './Button';
+import { useDispatch } from 'react-redux';
 
 export const TodoItem = ({ todo }) => {
 	const [isChangeTodo, setIsChangeTodo] = useState(false);
 
-	const { refreshTodoList } = useContext(AppContext);
-	const { updateTodo } = useUpdateTodo(refreshTodoList, setIsChangeTodo);
-	const { deleteTodo } = useDeleteTodo(refreshTodoList);
+	const dispatch = useDispatch();
+
+	const { updateTodo } = useUpdateTodo(dispatch, setIsChangeTodo);
+	const { deleteTodo } = useDeleteTodo(dispatch);
 	return (
 		<li className={styles.todo}>
 			{isChangeTodo ? (

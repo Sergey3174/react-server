@@ -1,12 +1,12 @@
+import { useDispatch } from 'react-redux';
 import styles from '../app.module.css';
-import { useContext } from 'react';
-import { AppContext } from '../context';
 import { debounce } from '../utils';
+import { setSearch } from '../action';
 
 export const SearchForm = () => {
-	const { dispatch } = useContext(AppContext);
+	const dispatch = useDispatch();
 	const searchTodoQuery = debounce(({ target }) => {
-		dispatch({ type: 'SET_SEARCH_TODO', payload: target.value });
+		dispatch(setSearch(target.value));
 	}, 1000);
 	return (
 		<form className={styles.formSearch}>

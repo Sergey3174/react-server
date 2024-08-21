@@ -1,4 +1,6 @@
-export const useOnSubmitTodo = (refreshTodoList) => {
+import { REFRESH } from '../action';
+
+export const useOnSubmitTodo = (dispatch) => {
 	const onSubmitTodo = (title) => {
 		fetch('http://localhost:3005/todos', {
 			method: 'POST',
@@ -8,7 +10,7 @@ export const useOnSubmitTodo = (refreshTodoList) => {
 				title: title,
 				completed: false,
 			}),
-		}).then(refreshTodoList);
+		}).finally(() => dispatch(REFRESH));
 	};
 
 	return { onSubmitTodo };

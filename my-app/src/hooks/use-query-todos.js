@@ -1,21 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { linkQuery } from '../utils';
+import { setTodos } from '../action';
+import { useSelector } from 'react-redux';
+import { selectSearch, selectSorted } from '../selectors';
 
 const LINK = 'http://localhost:3005/todos';
 
-export const useQueryTodos = (refreshTodosFlag) => {
-	const [isLoadingTodos, setIsLoading] = useState(false);
-	const [searchTodo, setSeachTodo] = useState(null);
-	const [sorted, setSorted] = useState(false);
-	const [todos, setTodos] = useState([]);
+export const useQueryTodos = (refresh, dispatch) => {
+	const search = useSelector(selectSearch);
+	const sorted = useSelector(selectSorted);
 
 	useEffect(() => {
-		setIsLoading(true);
-		fetch(`${linkQuery(sorted, searchTodo, LINK)}`)
-			.then((response) => response.json())
-			.then((json) => setTodos(json))
-			.finally(() => setIsLoading(false));
-	}, [refreshTodosFlag, sorted, searchTodo]);
-
-	return { isLoadingTodos, setSeachTodo, setSorted, sorted, todos };
+		dispatch(setTodos(linkQuery(sorted, search, LINK)));
+	}, [dispatch, refresh, search, sorted]);
 };

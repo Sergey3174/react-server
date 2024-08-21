@@ -1,4 +1,6 @@
-export const useUpdateTodo = (refreshTodoList, setIsChangeTodo) => {
+import { REFRESH } from '../action';
+
+export const useUpdateTodo = (dispatch, setIsChangeTodo) => {
 	const updateTodo = (todo, title) => {
 		fetch(`http://localhost:3005/todos/${todo.id}`, {
 			method: 'PUT',
@@ -8,7 +10,7 @@ export const useUpdateTodo = (refreshTodoList, setIsChangeTodo) => {
 				title: title,
 				completed: false,
 			}),
-		}).then(() => refreshTodoList());
+		}).finally(() => dispatch(REFRESH));
 		setIsChangeTodo(false);
 	};
 

@@ -1,11 +1,12 @@
-import { useContext } from 'react';
 import { TodoItem } from './TodoItem';
 import styles from '../app.module.css';
 import { Loader } from './Loader';
-import { AppContext } from '../context';
+import { useSelector } from 'react-redux';
+import { selectIsLoading, selectTodos } from '../selectors';
 
-export const TodoList = ({ isLoading }) => {
-	const { todos } = useContext(AppContext);
+export const TodoList = () => {
+	const todos = useSelector(selectTodos);
+	const isLoading = useSelector(selectIsLoading);
 	return (
 		<>
 			<h3>Список дел</h3>
